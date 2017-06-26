@@ -1,6 +1,8 @@
 (lp0
-S"^mode(disabled) ^start(animations/Stand/Gestures/You_4) Get a professional editor to look at your novel or story and tell you what you're doing right and where you could improve. ^wait(animations/Stand/Gestures/You_4)"
+S"^start(animations/Stand/Gestures/Hey_1) Hello. I'm NAO. ^wait(animations/Stand/Gestures/Hey_1)"
 p1
-aS'^mode(disabled) ^start(animations/Stand/Gestures/IDontKnow_1) Here are 65 examples of long sentences ranging from the relatively brief 96 words to one of the longest sentences at 2,156 words. ^wait(animations/Stand/Gestures/IDontKnow_1)'
+aS'^start(animations/Stand/Gestures/IDontKnow_1) I like robots. ^wait(animations/Stand/Gestures/IDontKnow_1)'
 p2
+aS'^start(animations/Stand/Gestures/Hey_6) Goodbye! ^wait(animations/Stand/Gestures/Hey_6)'
+p3
 a.
