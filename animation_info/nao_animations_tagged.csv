@@ -1,0 +1,48 @@
+Tag,Matching animations
+affirmative,Yes_1; Yes_2; Yes_3
+alright,Yes_1; Yes_2; Yes_3
+beg,Please_1
+beseech,Please_1
+body language,BodyTalk_1; BodyTalk_1; BodyTalk_10; BodyTalk_10; BodyTalk_11; BodyTalk_11; BodyTalk_12; BodyTalk_12; BodyTalk_13; BodyTalk_14; BodyTalk_15; BodyTalk_16; BodyTalk_17; BodyTalk_18; BodyTalk_19; BodyTalk_2; BodyTalk_2; BodyTalk_20; BodyTalk_21; BodyTalk_22; BodyTalk_3; BodyTalk_3; BodyTalk_4; BodyTalk_4; BodyTalk_5; BodyTalk_5; BodyTalk_6; BodyTalk_6; BodyTalk_7; BodyTalk_7; BodyTalk_8; BodyTalk_8; BodyTalk_9; BodyTalk_9; Explain_1; Explain_10; Explain_11; Explain_2; Explain_3; Explain_4; Explain_5; Explain_6; Explain_7; Explain_8; YouKnowWhat_1; YouKnowWhat_5
+bow,BowShort_1
+call,Hey_1; Hey_6
+clear,Explain_1; Explain_10; Explain_11; Explain_2; Explain_3; Explain_4; Explain_5; Explain_6; Explain_7; Explain_8
+enthusiastic,Enthusiastic_4; Enthusiastic_5
+entreat,Please_1
+explain,Explain_1; Explain_10; Explain_11; Explain_2; Explain_3; Explain_4; Explain_5; Explain_6; Explain_7; Explain_8; YouKnowWhat_1; YouKnowWhat_5
+happy,Enthusiastic_4; Enthusiastic_5
+hello,Hey_1; Hey_6
+hey,Hey_1; Hey_6
+hi,Hey_1; Hey_6
+I,Me_1; Me_2
+implore,Please_1
+indicate,You_1; You_4
+me,Me_1; Me_2
+my,Me_1; Me_2
+myself,Me_1; Me_2
+negative,No_3; No_8; No_9
+no,No_3; No_8; No_9
+not know,IDontKnow_1; IDontKnow_2
+ok,Yes_1; Yes_2; Yes_3
+oppose,No_3; No_8; No_9
+please,Please_1
+present,Explain_1; Explain_10; Explain_11; Explain_2; Explain_3; Explain_4; Explain_5; Explain_6; Explain_7; Explain_8
+rapturous,Enthusiastic_4; Enthusiastic_5
+raring,Enthusiastic_4; Enthusiastic_5
+refute,No_3; No_8; No_9
+reject,No_3; No_8; No_9
+rousing,Enthusiastic_4; Enthusiastic_5
+show,You_1; You_4
+supplicate,Please_1
+unacquainted,IDontKnow_1; IDontKnow_2
+undetermined,IDontKnow_1; IDontKnow_2
+undiscovered,IDontKnow_1; IDontKnow_2
+unfamiliar,IDontKnow_1; IDontKnow_2
+unknown,IDontKnow_1; IDontKnow_2
+warm,Enthusiastic_4; Enthusiastic_5
+yeah,Yes_1; Yes_2; Yes_3
+yes,Yes_1; Yes_2; Yes_3
+yoo-hoo,Hey_1
+you,You_1; You_4
+your,You_1; You_4
+zestful,Enthusiastic_4; Enthusiastic_5
