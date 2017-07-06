@@ -1,8 +1,18 @@
 (lp0
-S"^start(animations/Stand/Gestures/Hey_1) Hello. I'm NAO. ^wait(animations/Stand/Gestures/Hey_1)"
+S"^start(animations/SitOnPod/Gestures/Everything_4) I'm currently working on robotics research. ^wait(animations/SitOnPod/Gestures/Everything_4)"
 p1
-aS'^start(animations/Stand/Gestures/IDontKnow_1) I like robots. ^wait(animations/Stand/Gestures/IDontKnow_1)'
+aS'^start(animations/Stand/Gestures/Me_2) I am a college student. ^wait(animations/Stand/Gestures/Me_2)'
 p2
-aS'^start(animations/Stand/Gestures/Hey_6) Goodbye! ^wait(animations/Stand/Gestures/Hey_6)'
+aS'^start(animations/Stand/Gestures/Thinking_8) I like machine learning. ^wait(animations/Stand/Gestures/Thinking_8)'
 p3
+aS'^start(animations/SitOnPod/Gestures/CountTwo_1) I like robots. ^wait(animations/SitOnPod/Gestures/CountTwo_1)'
+p4
+aS'^start(animations/Stand/Emotions/Negative/Fearful_1) I study computer science. ^wait(animations/Stand/Emotions/Negative/Fearful_1)'
+p5
+aS'^start(animations/Stand/Gestures/CountOne_2) I think computers are really interesting. ^wait(animations/Stand/Gestures/CountOne_2)'
+p6
+aS'^start(animations/SitOnPod/Gestures/No_3) I have a Macbook Pro. ^wait(animations/SitOnPod/Gestures/No_3)'
+p7
+aS'^start(animations/Stand/Emotions/Neutral/Determined_1) quit() ^wait(animations/Stand/Emotions/Neutral/Determined_1)'
+p8
 a.

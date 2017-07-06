@@ -39,5 +39,4 @@ for gesture in animations:
             continue
     sleep(10) # Wait before going to the next animation.
 
-for k in gesture_vectors: print len(gesture_vectors[k])
 pickle.dump(gesture_vectors, open('pickles/gesture_feature_vectors.pickle', 'wb'))

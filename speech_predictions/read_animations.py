@@ -42,7 +42,7 @@ def run(animation):
     :param animation: Animation to be referenced.
     :return: String representation of NAO command.
     '''
-    return "^run(" + animations_dict[animation] + ")"
+    return "^run(" + animation + ")"
 
 def start(animation):
     '''
@@ -50,7 +50,7 @@ def start(animation):
     :param animation: Animation to be referenced.
     :return: String representation of NAO command.
     '''
-    return "^start(" + animations_dict[animation] + ")"
+    return "^start(" + animation + ")"
 
 def stop(animation):
     '''
@@ -58,7 +58,7 @@ def stop(animation):
     :param animation: Animation to be referenced.
     :return: String representation of NAO command.
     '''
-    return "^stop(" + animations_dict[animation] + ")"
+    return "^stop(" + animation + ")"
 
 def wait(animation):
     '''
@@ -67,4 +67,4 @@ def wait(animation):
     :param animation: Animation to be referenced.
     :return: String representation of NAO command.
     '''
-    return "^wait(" + animations_dict[animation] + ")"
+    return "^wait(" + animation + ")"

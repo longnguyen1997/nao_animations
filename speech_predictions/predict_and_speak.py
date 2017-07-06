@@ -6,6 +6,7 @@ from subprocess import call
 
 nlp = eng.load()
 model = pickle.load(open('../pickles/perceptron.pickle', 'rb'))
+all_animations_grouped = pickle.load(open('../pickles/all_animations_grouped.pickle', 'rb'))
 
 def blank():
     '''
@@ -39,7 +40,10 @@ def process_input(input):
     :return: ALAnimatedSpeech command form of input.
     '''
     prediction = model.predict(nlp(unicode(input)).vector.reshape(1, -1))
-    gesture = process_gesture(prediction[0])  # 0th index is gesture tag.
+    prediction_string = prediction[0]
+    gesture_old = process_gesture(prediction_string)  # 0th index is gesture tag.
+    category = all_animations_grouped[prediction_string]
+    gesture = category[randint(0, len(category) - 1)]
     return start(gesture) + ' ' + input + ' ' + wait(gesture)
 
 def prompt():
