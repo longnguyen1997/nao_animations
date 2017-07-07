@@ -1,0 +1,6 @@
+.idea
+ml_functions.pyc
+motion_analyzer.pyc
+gesture_vector_generator.pyc
+speech_predictions/read_animations.pyc
+speech_predictions/speech_runner.pyc
