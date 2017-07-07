@@ -1,5 +1,5 @@
 class NAOMotionDataAnalyzer():
-    def __init__(self, filename, robot_ip):
+    def __init__(self, filename, robot_ip='127.0.0.1'):
         from naoqi import ALProxy
         from pickle import load
         from numpy import std, mean
@@ -23,9 +23,6 @@ class NAOMotionDataAnalyzer():
         from pylab import rcParams
         from matplotlib import rc
 
-        # rc('font', **{'family': 'serif', 'serif': ['Computer Modern']})
-        # rcParams['text.usetex'] = True
-        # rcParams['text.latex.preamble'] = [r'\usepackage{lmodern}']
         rcParams['figure.figsize'] = 5.5, 3.8
         for k in self.data.keys():
             sns.distplot(self.data[k], hist=False, rug=rug)

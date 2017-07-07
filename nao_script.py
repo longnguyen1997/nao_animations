@@ -38,6 +38,10 @@ def process(data):
 def body_data():
     print motion.getSummary()
 
+def dump_gesture_data(obj, name):
+    from pickle import dump
+    dump(obj, open('pickles/gesture_data/' + name, 'wb'))
+
 motion = proxy("ALMotion")
 behavior = proxy("ALBehaviorManager")
 
@@ -48,4 +52,3 @@ def extract_command(line):
     return [float(s) for s in line.split()[2:][::4][1:]]
 
 negative_emotions = [r for r in behaviors if 'Emotions/Negative' in r]
-negative_data = process(negative_emotions)
