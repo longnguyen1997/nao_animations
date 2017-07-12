@@ -9,10 +9,15 @@ Working with `anaconda`, we utilize several libraries such as `spacy`, `seaborn`
 
 All scripts are specced accordingly (by functions and operations) and are best viewed in `pycharm` for documentation purposes.
 
+### Phases
+#### Speech prediction 
+This was done by training a multilayer perceptron model (default parameters provided in `scikit-learn`) with 9 classification groups corresponding to types of messages that NAO can say; for example, `happy`, `disappointed`, `telling`, etcetera. Inputs were fed by the user into a console prompt that then used the model and `spacy`'s vector representation of the input to classify it. After classification, one gesture from the corresponding Aldebaran library is performed concurrently as NAO speaks the message.
+#### Collecting joint sensor data
+With the `naoqi` library published by Aldebaran, reports were collected and parsed from string to  from NAO's joint sensors. Angles specified were in radians. Thus far, only a mix of data has been used to extrapolate new animations. Sequential time series analysis is yet to be done.
+
 ### References
 Some useful papers resourced for the project include, but are not limited to, the following:
 
-* [Model of expressive gestures for humanoid robot NAO
-](http://pages.isir.upmc.fr/~achard/GdR/p2.pdf)
+* [Model of expressive gestures for humanoid robot NAO](http://pages.isir.upmc.fr/~achard/GdR/p2.pdf)
 * [Gesture generation with low-dimensional embeddings](http://ict.usc.edu/pubs/Gesture%20generation%20with%20low-dimensional%20embeddings.pdf).
  
