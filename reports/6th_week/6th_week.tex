@@ -1,0 +1,41 @@
+\documentclass{article}
+\usepackage{kotex, geometry, hyperref, graphicx}
+
+\title{Week 6 - HMI Research Group \\ \large 10 Jul 2017 - 14 Jul 2017}
+\author{Long Phi Nguyen (뉀피롱), 한국전자통신연구원}
+
+\begin{document}
+
+  \pagenumbering{gobble}
+  \maketitle
+
+
+  \subsection*{Summary} The previous plan for generating new motions has been ruled out---the method of data collection and analysis
+  was very brute-force-based, inaccurate, and did not take sequential data into account.
+  As such, NAO fell down almost $100\%$ of the time when trying to generate
+  new gestures aside from the \verb|BodyTalk| category. Time series analysis is in progress.
+
+  \subsection*{Points}
+  \begin{itemize}
+    \item \verb|README.md| has been created on Github repository for documentation purposes.
+    \item Reparsed NAO's sensor data to collect sensor data chronologically as he moves while performing \verb|BodyTalk| gestures.
+    \item Wrote a function that calculates and plots the time series data for each of the \verb|BodyTalk| gestures.
+    \item Noticed some general trends between certain groups of joints related to the \verb|BodyTalk| category, such as
+          joint symmetry during interpolation, etc.
+    \item Read through the USC paper regarding low-dimensional manifolds.
+  \end{itemize}
+
+  \subsection*{Plans}
+  \begin{itemize}
+    \item Come up with a preliminary method to work with the time series data and generate better gestures from it.
+    \item Link data from gestures in a way that doesn't rely on brute-forcing them by skewed frequency (be smart about analysis).
+    \item Set constraints on generated gestures so that transitions between successive gestures are smooth, not abrupt as they currently are.
+    \item Refactor code for ease of understanding.
+  \end{itemize}
+
+  \subsection*{Addendum}
+  The repository can be found \href{https://github.com/longnguyen1997/nao_animations}{\texttt{here}} with its updated \verb|README.md|.
+  Time series plots for gestures from the \verb|BodyTalk| category can be found
+  \href{https://github.com/longnguyen1997/nao_animations/tree/master/plots/time_series/standing_bodytalk}{\texttt{here}}.
+
+\end{document}

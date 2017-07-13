@@ -1,0 +1,41 @@
+\documentclass{article}
+\usepackage{kotex, geometry, hyperref, graphicx}
+
+\title{Week 5 - HMI Research Group \\ \large 3 Jul 2017 - 7 Jul 2017}
+\author{Long Phi Nguyen (뉀피롱), 한국전자통신연구원}
+
+\begin{document}
+
+  \pagenumbering{gobble}
+  \maketitle
+
+
+  \subsection*{Summary} A new Python script/class was created to analyze motion from NAO's sensors. New, natural movements
+  have been successfully generated.
+
+  \subsection*{Points}
+  \begin{itemize}
+    \item Started over and collected 10,000+ sensor data reports from NAO (running on \verb|webots|)---this data
+    included \verb|BodyTalk| gestures, which are meant to be used when NAO speaks casually, and \verb|Emotions/Negative|
+    gestures.
+    \item Wrote a class that uses \verb|numpy|, \verb|seaborn|, and \verb|naoqi| together to provide analytics and
+    functional behavior for NAO's sensor data. This class plots sensor values with a kernel density estimate to indicate
+    joint positions that NAO often has when performing certain types of gestures. By sampling random values close to the
+    mean ($\pm$ standard dev.) of NAO's joints, it generates new motions.
+    \item Generated motion works beautifully for NAO (\verb|BodyTalk| category). Motions are smooth, and each is entirely new.
+  \end{itemize}
+
+  \subsection*{Plans}
+  \begin{itemize}
+    \item Clashing sensor distribution data from \verb|Emotions/Negative| gestures causes NAO to fall down when
+    generating new movements---need to fix this; new motions sampled from \verb|BodyTalk| are fine.
+    \item Analyze all the other subsets of gestures---currently only done with about $50/600+$ gestures.
+  \end{itemize}
+
+  \subsection*{Addendum}
+  Again, all progress made can be found \href{https://github.com/longnguyen1997/nao_animations}{\texttt{here}}.
+  Plots from the sensor data analysis can be found \href{https://github.com/longnguyen1997/nao_animations/tree/master/plots}{\texttt{here}}.
+
+
+
+\end{document}

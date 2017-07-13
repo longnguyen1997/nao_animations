@@ -1,0 +1,37 @@
+\documentclass{article}
+\usepackage{geometry,hyperref}
+
+\title{Setting Up Webots Environment for NAO Simulation}
+
+\begin{document}
+
+    \pagenumbering{gobble}
+
+    \maketitle
+
+    \subsection*{Software}
+
+    \begin{itemize}
+    \item Python IDE: \verb|anaconda 4.4.0 (32-bit), python 2.7.13|
+    \item Module: \verb|from naoqi import ALProxy| (Python SDK)
+    \item Webots: \verb|webots PRO 8.2.1|
+    \item Choregraphe: \verb|Choregraphe 2.1.4.13|, latest version
+    \end{itemize}
+
+    \subsection*{Details}
+
+    \begin{itemize}
+        \item For the Python SDK, Choreographe \emph{must} be installed
+              first before the \verb|import| statement will work.
+        \item To open NAO in Webots: \verb|File > Open Sample World > robots > aldebaran > nao.wbt|.
+        \item Webots NAO is hosted on IP \verb|127.0.0.1|, port \verb|9559|.
+        \item To establish a Python SDK connection with any NAO robot, run \newline
+              \verb|variable = ALProxy("name_of_module", "NAO_ip", port)|. \newline
+              For behaviors specifically on the Webots version of NAO, run \newline
+              \verb|behavior = ALProxy("ALBehaviorManager", "127.0.0.1", 9559)|.
+        \item Functions from the \verb|ALBehaviorManager| module can be found at \newline
+              \href{http://doc.aldebaran.com/2-1/naoqi/core/albehaviormanager-api.html#albehaviormanager-api}{
+              http://doc.aldebaran.com/2-1/naoqi/core/albehaviormanager-api.html#albehaviormanager-api.
+              }
+
+\end{document}

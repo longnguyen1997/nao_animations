@@ -1,12 +1,10 @@
-from time import sleep
+from time import sleep, time
 from naoqi import ALProxy
 import matplotlib.pyplot as plt
-import numpy as np
-from pickle import dump
-from scipy.interpolate import spline
-from time import time
+import matplotlib.patheffects as path_effects
 
-# ------ F U N C T I O N S ------- #
+
+# ------ D E V E L O P M E N T ------- #
 
 def proxy(module):
     '''
@@ -18,6 +16,18 @@ def proxy(module):
              and port 9559.
     '''
     return ALProxy(module, '127.0.0.1', 9559)
+
+
+# Start the proxies.
+motion = proxy("ALMotion")
+behavior = proxy("ALBehaviorManager")
+
+behaviors = behavior.getInstalledBehaviors()[2:]
+behaviors = [b for b in behaviors if
+             'Loop' not in b and 'Exhausted_2' not in b and 'Excited_1' not in b]  # remove loops
+
+
+# ------ F U N C T I O N S ------- #
 
 def split_reports(reports):
     # Split each report by new line delimiter.
@@ -33,12 +43,13 @@ def split_reports(reports):
     # Split each line of each report into its data.
     split = [[line.split() for line in report] for report in split]
     # Make the data dictionary.
-    angles = {body_part : [] for body_part in motion.getBodyNames('Body')}
+    angles = {body_part: [] for body_part in motion.getBodyNames('Body')}
     # Add the angles.
     for report in split:
         for line in report:
             angles[line[0]].append(float(line[2]))
     return angles
+
 
 def process(data):
     reports = set()
@@ -50,6 +61,7 @@ def process(data):
             reports.add(motion.getSummary())
     return split_reports(list(reports))
 
+
 def body_data():
     '''
     Return a visual representation of
@@ -58,6 +70,7 @@ def body_data():
     :return: Report of NAO's sensors and their angles.
     '''
     return motion.getSummary()
+
 
 def dump_gesture_data(obj, name):
     '''
@@ -69,6 +82,7 @@ def dump_gesture_data(obj, name):
     from pickle import dump
     dump(obj, open('pickles/gesture_data/' + name, 'wb'))
 
+
 def extract_command(line):
     '''
     Extracts an angle command from a given line.
@@ -78,6 +92,7 @@ def extract_command(line):
     '''
     return [float(s) for s in line.split()[2:][::4][1:]]
 
+
 def time_series(behav, save_directory='plots/time_series/standing_bodytalk'):
     '''
     Generates time series plots for all 26 of NAO's joints
@@ -86,8 +101,6 @@ def time_series(behav, save_directory='plots/time_series/standing_bodytalk'):
     :param behav: Behavior to be performed.
     :param save_directory: Directory to save plots in.
     '''
-
-    # TODO: MAKE ALL 26 COLORS TO PLOT LEGEND CORRECTLY
 
     def get_only_angles(data):
         '''
@@ -110,31 +123,37 @@ def time_series(behav, save_directory='plots/time_series/standing_bodytalk'):
     # Begin data collection as behavior runs.
     t = time()
     behavior.post.runBehavior(behav)
-    sleep(0.125)
+    sleep(0.125) # Account for latency.
     while behavior.isBehaviorRunning(behav):
         data.append(motion.getSummary())
         times.append(time() - t)
 
     # Postprocess the data.
     nums = get_only_angles(data)
-
-    # Pop data that doesn't represent all 26 joints.
+    # Pop data that doesn't represent all 26 joints or are duplicates.
     pop = []
+    seen = []
     for i in xrange(len(nums)):
-        if len(nums[i]) != 26:
+        if len(nums[i]) != 26 or nums[i] in seen:
             pop.append(i)
+        else:
+            seen.append(nums[i])
     for n in reversed(pop):
         times.pop(n)
         nums.pop(n)
+    print len(nums)
 
-    gesture = behav.split('/')[-1] # Name of gesture without directory prefixes.
+    gesture = behav.split('/')[-1]  # Name of gesture without directory prefixes.
 
-    # Plot the data.
-    fig = plt.figure()
+    # Plot the data, 26 colors, 26 joints.
+    num_colors = 26
     ax = plt.subplot(111)
+    cm = plt.get_cmap('jet')
+    ax.set_color_cycle([cm(1. * i / num_colors) for i in range(num_colors)])
     names = motion.getBodyNames('Body')
-    for i in xrange(26):
-        ax.plot(times, [r[i] for r in nums], label=names[i])
+    for i in xrange(num_colors):
+        ax.plot(times, [joint[i] for joint in nums], label=names[i], linewidth=0.7,
+                path_effects=[path_effects.SimpleLineShadow(offset=(0.5, -0.5)), path_effects.Normal()])
 
     # Decorate the graph and save figure to .pdf format.
     box = ax.get_position()
@@ -145,12 +164,3 @@ def time_series(behav, save_directory='plots/time_series/standing_bodytalk'):
     plt.title(gesture)
     plt.savefig(save_directory + '/' + gesture + '.pdf')
     plt.close()
-
-# ------ D E V E L O P M E N T ------- #
-
-# Start the proxies.
-motion = proxy("ALMotion")
-behavior = proxy("ALBehaviorManager")
-
-behaviors = behavior.getInstalledBehaviors()[2:]
-behaviors = [b for b in behaviors if 'Loop' not in b and 'Exhausted_2' not in b and 'Excited_1' not in b] # remove loops

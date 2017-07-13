@@ -1,0 +1,35 @@
+\documentclass{article}
+\usepackage{kotex, geometry, hyperref}
+
+\title{Week 3 - HMI Research Group \\ \large 19 Jun 2017 - 23 Jun 2017}
+\author{Long Phi Nguyen (뉀피롱), 한국전자통신연구원}
+
+\begin{document}
+
+  \pagenumbering{gobble}
+  \maketitle
+
+
+  \subsection*{Summary} This week consisted of implementing algorithms and data structures to predict and generate responses for the NAO robot. Automated gesture generation succeeded (in very elementary stages), with naive vector similarity implemented thus far to categorize words and phrases.
+
+  \subsection*{Points}
+  \begin{itemize}
+    \item Parsed gesture data from Aldebaran documentation into \verb|.csv| files.
+    \item Used \verb|.csv| files to generate reference data structures for automated gesture generation.
+    \item Used \verb|spaCy|'s large vocabulary corpus to quantify 9 different classes of ``sentiments" as based on gesture tags in Aldebaran documentation.
+    \item Trained a multilayered perceptron neural network model (from \verb|sklearn| library) on the data generated from \verb|spaCy|'s corpus.
+    \item Took a look at NAO and how it works.
+    \item Successfully tested very basic features in Choregraphe and \verb|cmd|/\verb|anaconda|.
+  \end{itemize}
+
+  \subsection*{Plans}
+  \begin{itemize}
+    \item Make scripts more efficient.
+    \item Optimize the algorithm for automated gesture generation.
+    \item Optimize the neural network model further for better predictions.
+    \item Write a Python script that will \emph{continually generate and send} gestures and replies to NAO as the user inputs text.
+    \item Learn \verb|nltk|, as the \verb|naoqi| Python library doesn't work under OS X, but \verb|spaCy| doesn't work under Windows 10 and Python 2.7. Only \verb|nltk| is compatible universally.
+  \end{itemize}
+
+
+\end{document}
