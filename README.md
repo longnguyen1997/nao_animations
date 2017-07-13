@@ -1,6 +1,3 @@
-[TOC]
-
-
 # NAO Animations
 This project, done with the permission of the [Electronics and Telecommunications Research Institute of Korea](http://etri.re.kr/), seeks to generate intelligent, adaptive behavioral gestures in the [Aldebaran NAO robot](https://www.ald.softbankrobotics.com/en/cool-robots/nao). 
 
@@ -13,7 +10,17 @@ Working with `anaconda (4.4.0), python 2.7.13 (32-bit)`, we utilize several libr
 All scripts are specced accordingly (by functions and operations) and are best viewed in `pycharm` for documentation purposes.
 
 ## Usage
-Let's take a look at the file `motion_analyzer.py`.
+As an example, let's take a look at the file `motion_analyzer.py`. Inside is a defined class, `NAOMotionDataAnalyzer(filename)` that takes in a data file and defaults its connection to a NAO instance running on `127.0.0.1`. 
+
+Suppose we wanted NAO to generate new gestures according to the `bodytalk` data, with each animation period being 2s long. Suppose we also wanted to plot the sensor distribution data. We would do the following:
+
+```python
+bodytalk_analyzer = NAOMotionDataAnalyzer('pickles/gesture_data/bodytalk.pickle')
+bodytalk_analyzer.move_nao(2)
+bodytalk_analyzer.plot_distribution('plots')
+```
+
+For other modules and their usage, refer to the documentation included in their files.
 
 ## Phases
 ### Textual classification
@@ -28,68 +35,4 @@ Some useful papers resourced for the project include, but are not limited to, th
 
 * [Model of expressive gestures for humanoid robot NAO](http://pages.isir.upmc.fr/~achard/GdR/p2.pdf)
 * [Gesture generation with low-dimensional embeddings](http://ict.usc.edu/pubs/Gesture%20generation%20with%20low-dimensional%20embeddings.pdf).
- 
 
-
-### MathJax
-
-You can render *LaTeX* mathematical expressions using **MathJax**, as on [math.stackexchange.com][1]:
-
-The *Gamma function* satisfying $\Gamma(n) = (n-1)!\quad\forall n\in\mathbb N$ is via the Euler integral
-
-$$
-\Gamma(z) = \int_0^\infty t^{z-1}e^{-t}dt\,.
-$$
-
-> **Tip:** To make sure mathematical expressions are rendered properly on your website, include **MathJax** into your template:
-
-```
-<script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS_HTML"></script>
-```
-
-> **Note:** You can find more information about **LaTeX** mathematical expressions [here][4].
-
-
-### UML diagrams
-
-You can also render sequence diagrams like this:
-
-```sequence
-Alice->Bob: Hello Bob, how are you?
-Note right of Bob: Bob thinks
-Bob-->Alice: I am good thanks!
-```
-
-And flow charts like this:
-
-```flow
-st=>start: Start
-e=>end
-op=>operation: My Operation
-cond=>condition: Yes or No?
-
-st->op->cond
-cond(yes)->e
-cond(no)->op
-```
-
-> **Note:** You can find more information:
-
-> - about **Sequence diagrams** syntax [here][7],
-> - about **Flow charts** syntax [here][8].
-
-### Support StackEdit
-
-[![](https://cdn.monetizejs.com/resources/button-32.png)](https://monetizejs.com/authorize?client_id=ESTHdCYOi18iLhhO&summary=true)
-
-  [^stackedit]: [StackEdit](https://stackedit.io/) is a full-featured, open-source Markdown editor based on PageDown, the Markdown library used by Stack Overflow and the other Stack Exchange sites.
-
-
-  [1]: http://math.stackexchange.com/
-  [2]: http://daringfireball.net/projects/markdown/syntax "Markdown"
-  [3]: https://github.com/jmcmanus/pagedown-extra "Pagedown Extra"
-  [4]: http://meta.math.stackexchange.com/questions/5020/mathjax-basic-tutorial-and-quick-reference
-  [5]: https://code.google.com/p/google-code-prettify/
-  [6]: http://highlightjs.org/
-  [7]: http://bramp.github.io/js-sequence-diagrams/
-  [8]: http://adrai.github.io/flowchart.js/
