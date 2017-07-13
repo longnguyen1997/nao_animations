@@ -1,5 +1,5 @@
 # NAO Animations
-This project, done with the permission of the [Electronics and Telecommunications Research Institute of Korea](http://etri.re.kr/), seeks to generate intelligent, adaptive behavioral gestures in the Aldebaran NAO robot. 
+This project, done with the permission of the [Electronics and Telecommunications Research Institute of Korea](http://etri.re.kr/), seeks to generate intelligent, adaptive behavioral gestures in the [Aldebaran NAO robot](https://www.ald.softbankrobotics.com/en/cool-robots/nao). 
 
 # Overview
 Recent developments in machine learning, natural language processing, and computer vision have spurred research in intelligent robotics. We aim to make robots more believable in their behavior, and in working with NAO, we hope to generate synchronous, distinct body language taken not from a predetermined set of gestures, but adapted and learned methodically from sensor data and textual analysis.
