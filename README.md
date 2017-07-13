@@ -1,4 +1,4 @@
- # NAO Animations
+# NAO Animations
 This project, done with the permission of the [Electronics and Telecommunications Research Institute of Korea](http://etri.re.kr/), seeks to generate intelligent, adaptive behavioral gestures in the Aldebaran NAO robot. 
 
 # Overview
@@ -10,11 +10,11 @@ Working with `anaconda (4.4.0), python 2.7.13 (32-bit)`, we utilize several libr
 All scripts are specced accordingly (by functions and operations) and are best viewed in `pycharm` for documentation purposes.
 
 ## Phases
-#### Speech prediction 
+### Textual classification
 This was done by training a multilayer perceptron model (default parameters provided in `scikit-learn`) with 9 classification groups corresponding to types of messages that NAO can say; for example, `happy`, `disappointed`, `telling`, etcetera. Inputs were fed by the user into a console prompt that then used the model and `spacy`'s vector representation of the input to classify it. After classification, one gesture from the corresponding Aldebaran library is performed concurrently as NAO speaks the message.
-#### Collecting joint sensor data
+### Collecting joint sensor data
 With the `naoqi` library published by Aldebaran, reports were collected and parsed from string format to readable Python data from NAO's joint sensors. Angles specified were in radians. Thus far, only a mix of data has been used to extrapolate new animations. Sequential time series analysis is yet to be done.
-#### Motion generation
+### Motion generation
 Motion generation is done by sampling a point within the mean of a dataset (in this case, joint sensor data), plus/minus one standard deviation. This is a naive way to ensure accurate generation while allowing some freedom for natural deviations. Transitions between gestures are currently not as smooth as they should be.
 
 ## References
