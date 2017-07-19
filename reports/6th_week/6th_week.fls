@@ -1,8 +1,8 @@
-PWD C:/Users/etri1/Dropbox (MIT)/Programming and ETRI Work/ETRI/Reports/6th Week
+PWD C:/Users/etri1/Dropbox (MIT)/Programming and ETRI Work/nao_animations/reports/6th_week
 INPUT c:/texlive/2017/texmf.cnf
 INPUT c:/texlive/2017/texmf-dist/web2c/texmf.cnf
 INPUT c:/texlive/2017/texmf-var/web2c/pdftex/pdflatex.fmt
-INPUT c:/Users/etri1/Dropbox (MIT)/Programming and ETRI Work/ETRI/Reports/6th Week/6th_week.tex
+INPUT c:/Users/etri1/Dropbox (MIT)/Programming and ETRI Work/nao_animations/reports/6th_week/6th_week.tex
 OUTPUT 6th_week.log
 INPUT c:/texlive/2017/texmf-dist/tex/latex/base/article.cls
 INPUT c:/texlive/2017/texmf-dist/tex/latex/base/article.cls

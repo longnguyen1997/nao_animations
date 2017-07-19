@@ -10,7 +10,7 @@ import pickle, time
 from multiprocessing import Process
 from naoqi import ALProxy
 
-def load_and_speak(ROBOT_IP = "192.168.0.10", PORT = 9559):
+def load_and_speak(ip="192.168.0.10", port=9559):
 
     '''
     Loads messages processed from the user and prompts
@@ -18,8 +18,8 @@ def load_and_speak(ROBOT_IP = "192.168.0.10", PORT = 9559):
     detailing how long each message takes to say. Gestures
     are run in disabled body language mode.
 
-    :param ROBOT_IP: NAO's current IP, default of 192.168.0.10.
-    :param PORT: Hosting port for NAO's interface, default of 9559.
+    :param ip: NAO's current IP, default of 192.168.0.10.
+    :param port: Hosting port for NAO's interface, default of 9559.
     :return: void
     '''
 

@@ -1,10 +1,10 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.18 (TeX Live 2017/W32TeX) (preloaded format=pdflatex 2017.7.13)  13 JUL 2017 16:57
+This is pdfTeX, Version 3.14159265-2.6-1.40.18 (TeX Live 2017/W32TeX) (preloaded format=pdflatex 2017.7.13)  14 JUL 2017 17:34
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
  %&-line parsing enabled.
-**"c:/Users/etri1/Dropbox (MIT)/Programming and ETRI Work/ETRI/Reports/6th Week/6th_week.tex"
-(c:/Users/etri1/Dropbox (MIT)/Programming and ETRI Work/ETRI/Reports/6th Week/6th_week.tex
+**"c:/Users/etri1/Dropbox (MIT)/Programming and ETRI Work/nao_animations/reports/6th_week/6th_week.tex"
+(c:/Users/etri1/Dropbox (MIT)/Programming and ETRI Work/nao_animations/reports/6th_week/6th_week.tex
 LaTeX2e <2017-04-15>
 Babel <3.10> and hyphenation patterns for 84 language(s) loaded.
 (c:/texlive/2017/texmf-dist/tex/latex/base/article.cls
@@ -667,15 +667,15 @@ Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 41.
  ) 
 Here is how much of TeX's memory you used:
  6179 strings out of 492995
- 89774 string characters out of 6136417
+ 89804 string characters out of 6136417
  186147 words of memory out of 5000000
  9653 multiletter control sequences out of 15000+600000
  10065 words of font info for 36 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 37i,7n,25p,264b,447s stack positions out of 5000i,500n,10000p,200000b,80000s
+ 37i,7n,25p,274b,447s stack positions out of 5000i,500n,10000p,200000b,80000s
 <c:/texlive/2017/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx12.pfb><c:/texlive/2017/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb><c:/texlive/2017/texmf-dist/fonts/type1/public/amsfonts/cm/cmr12.pfb><c:/texlive/2017/texmf-dist/fonts/type1/public/amsfonts/cm/cmr17.pfb><c:/texlive/2017/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb><c:/texlive/2017/texmf-dist/fonts/type1/public/amsfonts/cm/cmtt10.pfb><c:/texlive/2017/texmf-dist/fonts/type1/public/nanumtype1/nanummjmad.pfb><c:/texlive/2017/texmf-dist/fonts/type1/public/nanumtype1/nanummjmb2.pfb><c:/texlive/2017/texmf-dist/fonts/type1/public/nanumtype1/nanummjmb8.pfb><c:/texlive/2017/texmf-dist/fonts/type1/public/nanumtype1/nanummjmc2.pfb><c:/texlive/2017/texmf-dist/fonts/type1/public/nanumtype1/nanummjmc5.pfb><c:/texlive/2017/texmf-dist/fonts/type1/public/nanumtype1/nanummjmc6.pfb><c:/texlive/2017/texmf-dist/fonts/type1/public/nanumtype1/nanummjmc7.pfb><c:/texlive/2017/texmf-dist/fonts/type1/public/nanumtype1/nanummjmc8.p
 fb><c:/texlive/2017/texmf-dist/fonts/type1/public/nanumtype1/nanummjmd1.pfb><c:/texlive/2017/texmf-dist/fonts/type1/public/nanumtype1/nanummjmd5.pfb>
-Output written on 6th_week.pdf (1 page, 431645 bytes).
+Output written on 6th_week.pdf (1 page, 431441 bytes).
 PDF statistics:
  83 PDF objects out of 1000 (max. 8388607)
  63 compressed objects within 1 object stream

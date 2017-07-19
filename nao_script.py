@@ -2,6 +2,7 @@ from time import sleep, time
 from naoqi import ALProxy
 import matplotlib.pyplot as plt
 import matplotlib.patheffects as path_effects
+import numpy as np
 
 
 # ------ D E V E L O P M E N T ------- #
@@ -17,7 +18,6 @@ def proxy(module):
     '''
     return ALProxy(module, '127.0.0.1', 9559)
 
-
 # Start the proxies.
 motion = proxy("ALMotion")
 behavior = proxy("ALBehaviorManager")
@@ -25,7 +25,6 @@ behavior = proxy("ALBehaviorManager")
 behaviors = behavior.getInstalledBehaviors()[2:]
 behaviors = [b for b in behaviors if
              'Loop' not in b and 'Exhausted_2' not in b and 'Excited_1' not in b]  # remove loops
-
 
 # ------ F U N C T I O N S ------- #
 
@@ -50,7 +49,6 @@ def split_reports(reports):
             angles[line[0]].append(float(line[2]))
     return angles
 
-
 def process(data):
     reports = set()
     for b in data:
@@ -61,7 +59,6 @@ def process(data):
             reports.add(motion.getSummary())
     return split_reports(list(reports))
 
-
 def body_data():
     '''
     Return a visual representation of
@@ -70,7 +67,6 @@ def body_data():
     :return: Report of NAO's sensors and their angles.
     '''
     return motion.getSummary()
-
 
 def dump_gesture_data(obj, name):
     '''
@@ -82,7 +78,6 @@ def dump_gesture_data(obj, name):
     from pickle import dump
     dump(obj, open('pickles/gesture_data/' + name, 'wb'))
 
-
 def extract_command(line):
     '''
     Extracts an angle command from a given line.
@@ -92,8 +87,7 @@ def extract_command(line):
     '''
     return [float(s) for s in line.split()[2:][::4][1:]]
 
-
-def time_series(behav, save_directory='plots/time_series/standing_bodytalk'):
+def time_series(behav, save_directory='plots/time_series/standing_bodytalk', return_data=False):
     '''
     Generates time series plots for all 26 of NAO's joints
     while they perform a specified behavior.
@@ -112,8 +106,13 @@ def time_series(behav, save_directory='plots/time_series/standing_bodytalk'):
         '''
         out = []
         for i in xrange(len(data)):
-            out.append([a[2] for a in [l.split() for l in data[i].split('\n')[2:-5]]])
-        return [[float(n) for n in o] for o in out]
+            split = data[i].split('\n')[2:] # Remove first 2 header rows.
+            cutoff = 0 # Find where to split the file.
+            for j in range(len(split)):
+                if 'Tasks' in split[j]:
+                    cutoff = j; break
+            out.append([t[2] for t in [l.split() for l in split[:cutoff]]])
+        return [[float(n) for n in report] for report in out]
 
     # Allocate arrays for data collection.
     # Entries are time-sequential by index.
@@ -128,20 +127,27 @@ def time_series(behav, save_directory='plots/time_series/standing_bodytalk'):
         data.append(motion.getSummary())
         times.append(time() - t)
 
+    # O(n) algorithm to filter by 0.15s intervals.
+    keep = [0]
+    begin = 0
+    end = 0
+    while end < len(times):
+        if times[end] - times[begin] >= 0.15:
+            keep.append(end)
+            begin = end
+        else:
+            end += 1
+
     # Postprocess the data.
     nums = get_only_angles(data)
-    # Pop data that doesn't represent all 26 joints or are duplicates.
-    pop = []
-    seen = []
-    for i in xrange(len(nums)):
-        if len(nums[i]) != 26 or nums[i] in seen:
-            pop.append(i)
-        else:
-            seen.append(nums[i])
-    for n in reversed(pop):
+    for n in reversed([t for t in range(len(times)) if t not in keep]):
         times.pop(n)
         nums.pop(n)
-    print len(nums)
+
+    print '\nNumber of data points:', len(nums), '\n'
+
+    if return_data:
+        return np.array(times), np.array(nums)
 
     gesture = behav.split('/')[-1]  # Name of gesture without directory prefixes.
 
@@ -164,3 +170,5 @@ def time_series(behav, save_directory='plots/time_series/standing_bodytalk'):
     plt.title(gesture)
     plt.savefig(save_directory + '/' + gesture + '.pdf')
     plt.close()
+
+data = time_series(behaviors[10], return_data=True)
