@@ -11,7 +11,7 @@ JOINT_NAMES = ['HeadYaw', 'HeadPitch', 'LShoulderPitch', 'LShoulderRoll', 'LElbo
 
 # ------ D E V E L O P M E N T ------- #
 
-def proxy(module):
+def proxy(module, ip='127.0.0.1', port=9559):
     '''
     Establishes a proxy to the corresponding
     NAOqi module.
@@ -20,11 +20,12 @@ def proxy(module):
     :return: A proxy to module, running on IP 127.0.0.1
              and port 9559.
     '''
-    return ALProxy(module, '127.0.0.1', 9559)
+    return ALProxy(module, ip, port)
 
 # Start the proxies.
 motion = proxy("ALMotion")
 behavior = proxy("ALBehaviorManager")
+posture = proxy("ALRobotPosture")
 
 # ------ F U N C T I O N S ------- #
 
@@ -119,6 +120,10 @@ def time_series(behav, save_directory='plots/time_series/standing_bodytalk', ret
     data = []
     times = []
 
+    # Reset NAO's position.
+    behavior.runBehavior(behav)
+    # posture.goToPosture('Standing', 1.0)
+
     # Begin data collection as behavior runs.
     t = time()
     behavior.post.runBehavior(behav)
@@ -129,7 +134,7 @@ def time_series(behav, save_directory='plots/time_series/standing_bodytalk', ret
 
     # O(n) algorithm to filter by threshold-time intervals.
     keep = [0]
-    threshold = 0.05
+    threshold = 0.2
     begin = 0
     end = 0
     while end < len(times):
@@ -157,11 +162,8 @@ def time_series(behav, save_directory='plots/time_series/standing_bodytalk', ret
     ax = plt.subplot(111)
     cm = plt.get_cmap('jet')
     ax.set_color_cycle([cm(1. * i / num_colors) for i in range(num_colors)])
-    names = angles_joints[0]
-    print names
-    print len(names)
     for i in xrange(num_colors):
-        ax.plot(times, [joint[i] for joint in angles], label=names[i], linewidth=0.7,
+        ax.plot(times, [joint[i] for joint in angles], label=JOINT_NAMES[i], linewidth=0.7,
                 path_effects=[path_effects.SimpleLineShadow(offset=(0.5, -0.5)), path_effects.Normal()])
 
     # Decorate the graph and save figure to .pdf format.
@@ -174,8 +176,9 @@ def time_series(behav, save_directory='plots/time_series/standing_bodytalk', ret
     plt.savefig(save_directory + '/' + gesture + '.pdf')
     plt.close()
 
-data = time_series(behaviors[10], return_data=True)
+behaviors = behavior.getInstalledBehaviors()[1:]
 
-sleep(4)
+# Tuple where 0th element is period, 1st is data.
+data = time_series(behaviors[9], return_data=True)
 for i in range(len(data[1])):
     motion.angleInterpolation(JOINT_NAMES, data[1][i], data[0], True)

@@ -1,3 +1,4 @@
+# coding=utf-8
 import matplotlib.pyplot as plt
 import seaborn as sns
 from naoqi import ALProxy
@@ -12,7 +13,7 @@ class NAOMotionDataAnalyzer():
     Motion analysis and functional movement module. Takes given data in
     proper format (a dictionary of the 26 different sensors on NAO's body
     whose values are all measurements taken of each sensor) belonging
-    to a certain category of movements.
+    to a certain category of movements.†
 
     Supports plotting movement distribution, and NAO can be controlled to
     generate new, natural movements based on statistical sampling from
@@ -24,17 +25,18 @@ class NAOMotionDataAnalyzer():
         Start a new instance of the motion analytics module. A NAO instance (whether
         simulated or physical) MUST be running when creating this module.
 
-        :param filename: The name of the data file. May also include subdirectories.
+        :param filename: The name of the data file. Path relative to current directory.
         :param robot_ip: NAO's IP, in string format. Defaulted to 127.0.0.1 (Webots simulation).
         '''
         self.file = filename
         self.ip = robot_ip
+        self.port = 9559
         self.data = load(open(filename, 'rb'))
         self.means_stds = {k: (mean(self.data[k]), std(self.data[k]))
                            for k in self.data}
         self.data_bounds = {k : (self.means_stds[k][0]-self.means_stds[k][1], self.means_stds[k][0]+self.means_stds[k][1])
                             for k in self.means_stds}
-        self.motion_proxy = ALProxy("ALMotion", robot_ip, 9559)
+        self.motion_proxy = ALProxy("ALMotion", robot_ip, self.port)
         self.motion_proxy.wakeUp()
 
     def __str__(self):
