@@ -1,9 +1,13 @@
 from time import sleep, time
 from naoqi import ALProxy
+import numpy as np
 import matplotlib.pyplot as plt
 import matplotlib.patheffects as path_effects
-import numpy as np
 
+JOINT_NAMES = ['HeadYaw', 'HeadPitch', 'LShoulderPitch', 'LShoulderRoll', 'LElbowYaw', 'LElbowRoll',
+            'LWristYaw', 'LHipYawPitch', 'LHipRoll', 'LHipPitch', 'LKneePitch', 'LAnklePitch', 'LAnkleRoll',
+            'RHipYawPitch', 'RHipRoll', 'RHipPitch', 'RKneePitch', 'RAnklePitch', 'RAnkleRoll',
+            'RShoulderPitch', 'RShoulderRoll', 'RElbowYaw', 'RElbowRoll', 'RWristYaw', 'LHand', 'RHand']
 
 # ------ D E V E L O P M E N T ------- #
 
@@ -21,10 +25,6 @@ def proxy(module):
 # Start the proxies.
 motion = proxy("ALMotion")
 behavior = proxy("ALBehaviorManager")
-
-behaviors = behavior.getInstalledBehaviors()[2:]
-behaviors = [b for b in behaviors if
-             'Loop' not in b and 'Exhausted_2' not in b and 'Excited_1' not in b]  # remove loops
 
 # ------ F U N C T I O N S ------- #
 
@@ -96,23 +96,23 @@ def time_series(behav, save_directory='plots/time_series/standing_bodytalk', ret
     :param save_directory: Directory to save plots in.
     '''
 
-    def get_only_angles(data):
+    def get_angles(data):
         '''
-        Given a dataset, only find the radian angles
+        Given a dataset, only find the radian get_angles
         corresponding to NAO's sensor movements.
 
-        :param data: Data to sift through for angles.
-        :return: An array of angles in float format.
+        :param data: Data to sift through for get_angles.
+        :return: An array of get_angles in float format.
         '''
-        out = []
+        angles = []
         for i in xrange(len(data)):
             split = data[i].split('\n')[2:] # Remove first 2 header rows.
             cutoff = 0 # Find where to split the file.
             for j in range(len(split)):
                 if 'Tasks' in split[j]:
                     cutoff = j; break
-            out.append([t[2] for t in [l.split() for l in split[:cutoff]]])
-        return [[float(n) for n in report] for report in out]
+            angles.append([t[2] for t in [l.split() for l in split[:cutoff]]])
+        return [[float(n) for n in report] for report in angles]
 
     # Allocate arrays for data collection.
     # Entries are time-sequential by index.
@@ -127,27 +127,28 @@ def time_series(behav, save_directory='plots/time_series/standing_bodytalk', ret
         data.append(motion.getSummary())
         times.append(time() - t)
 
-    # O(n) algorithm to filter by 0.15s intervals.
+    # O(n) algorithm to filter by threshold-time intervals.
     keep = [0]
+    threshold = 0.05
     begin = 0
     end = 0
     while end < len(times):
-        if times[end] - times[begin] >= 0.15:
+        if times[end] - times[begin] >= threshold:
             keep.append(end)
             begin = end
         else:
             end += 1
 
     # Postprocess the data.
-    nums = get_only_angles(data)
+    angles = get_angles(data)
     for n in reversed([t for t in range(len(times)) if t not in keep]):
         times.pop(n)
-        nums.pop(n)
+        angles.pop(n)
 
-    print '\nNumber of data points:', len(nums), '\n'
+    print '\nNumber of data points:', len(angles), '\n'
 
     if return_data:
-        return np.array(times), np.array(nums)
+        return threshold, angles
 
     gesture = behav.split('/')[-1]  # Name of gesture without directory prefixes.
 
@@ -156,9 +157,11 @@ def time_series(behav, save_directory='plots/time_series/standing_bodytalk', ret
     ax = plt.subplot(111)
     cm = plt.get_cmap('jet')
     ax.set_color_cycle([cm(1. * i / num_colors) for i in range(num_colors)])
-    names = motion.getBodyNames('Body')
+    names = angles_joints[0]
+    print names
+    print len(names)
     for i in xrange(num_colors):
-        ax.plot(times, [joint[i] for joint in nums], label=names[i], linewidth=0.7,
+        ax.plot(times, [joint[i] for joint in angles], label=names[i], linewidth=0.7,
                 path_effects=[path_effects.SimpleLineShadow(offset=(0.5, -0.5)), path_effects.Normal()])
 
     # Decorate the graph and save figure to .pdf format.
@@ -172,3 +175,7 @@ def time_series(behav, save_directory='plots/time_series/standing_bodytalk', ret
     plt.close()
 
 data = time_series(behaviors[10], return_data=True)
+
+sleep(4)
+for i in range(len(data[1])):
+    motion.angleInterpolation(JOINT_NAMES, data[1][i], data[0], True)

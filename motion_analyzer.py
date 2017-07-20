@@ -1,3 +1,12 @@
+import matplotlib.pyplot as plt
+import seaborn as sns
+from naoqi import ALProxy
+from pickle import load
+from random import uniform
+from numpy import std, mean
+from pylab import rcParams
+from matplotlib import rc
+
 class NAOMotionDataAnalyzer():
     '''
     Motion analysis and functional movement module. Takes given data in
@@ -18,10 +27,6 @@ class NAOMotionDataAnalyzer():
         :param filename: The name of the data file. May also include subdirectories.
         :param robot_ip: NAO's IP, in string format. Defaulted to 127.0.0.1 (Webots simulation).
         '''
-        from naoqi import ALProxy
-        from pickle import load
-        from numpy import std, mean
-
         self.file = filename
         self.ip = robot_ip
         self.data = load(open(filename, 'rb'))
@@ -45,11 +50,6 @@ class NAOMotionDataAnalyzer():
         :param rug: Whether or not to show a rug (color indicator)
                     at the bottom of the plots. Takes significantly more time.
         '''
-        import matplotlib.pyplot as plt
-        import seaborn as sns
-        from pylab import rcParams
-        from matplotlib import rc
-
         rcParams['figure.figsize'] = 5.5, 3.8
         for k in self.data.keys():
             sns.distplot(self.data[k], hist=False, rug=rug)
@@ -67,7 +67,7 @@ class NAOMotionDataAnalyzer():
                  that is statistically within the means of the dataset by its
                  respective standard deviations.
         '''
-        from random import uniform
+
         return {k: uniform(self.data_bounds[k][0], self.data_bounds[k][1]) for k in self.data_bounds}
 
     def move_nao(self, time):
