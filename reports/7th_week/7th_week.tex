@@ -1,0 +1,34 @@
+\documentclass{article}
+\usepackage{kotex, geometry, hyperref, graphicx}
+
+\title{Week 7 - HMI Research Group \\ \large 17 Jul 2017 - 21 Jul 2017}
+\author{Long Phi Nguyen (뉀피롱), 한국전자통신연구원}
+
+\begin{document}
+
+  \pagenumbering{gobble}
+  \maketitle
+
+
+  \subsection*{Summary} A \emph{huge} bug was found when going through the codebase this week: this whole time, wrong sensor names were being assigned to angle/data points. NAO only fell down because of this, and it explains weird animations being triggered when trying to replicate motion with collected data.
+
+  \subsection*{Points}
+  \begin{itemize}
+    \item Reread the low-dimensional embedding paper and experimented with Python package \verb|GPy| (Gaussian process modeling package).
+    \item Reparsed sensor and data correspondence and finally debugged NAO falling down.
+    \item Wrote an $O(n)$ algorithm incorporated into sensor data collection to bridge data points by intervals of 0.3s. These points can then all be interpolated sequentially with 0.3s transitions to replicate the original movements.
+    \item Tested original method of statistical sampling within the mean by a standard deviation---movements are fine now and replicate original Aldebaran gestures well, but with their own exaggerations for natural effect.
+  \end{itemize}
+
+  \subsection*{Plans}
+  \begin{itemize}
+    \item Need to determine a way to sample a trajectory and map it back to 26-dimensional space to generate new motions while preserving old trajectory sequences.
+    \item Refactor \verb|nao_script.py| and \verb|motion_analyzer.py| together into a new, modular class, preferably derived from \verb|naoqi|'s \verb|ALModule| class.
+  \end{itemize}
+
+  \subsection*{Addendum}
+  The repository can be found \href{https://github.com/longnguyen1997/nao_animations}{\texttt{here}}.
+  Time series plots for gestures from \verb|BodyTalk| were redone with the correct sensor relations and can be found
+  \href{https://github.com/longnguyen1997/nao_animations/tree/master/plots/time_series/standing_bodytalk}{\texttt{here}}.
+
+\end{document}

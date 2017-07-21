@@ -60,15 +60,6 @@ def process(data):
             reports.add(motion.getSummary())
     return split_reports(list(reports))
 
-def body_data():
-    '''
-    Return a visual representation of
-    NAO's current joint sensor data.
-
-    :return: Report of NAO's sensors and their angles.
-    '''
-    return motion.getSummary()
-
 def dump_gesture_data(obj, name):
     '''
     Dumps gesture data into file name.
@@ -99,11 +90,11 @@ def time_series(behav, save_directory='plots/time_series/standing_bodytalk', ret
 
     def get_angles(data):
         '''
-        Given a dataset, only find the radian get_angles
+        Given a dataset, only find the radian angle
         corresponding to NAO's sensor movements.
 
         :param data: Data to sift through for get_angles.
-        :return: An array of get_angles in float format.
+        :return: An array of angles in float format.
         '''
         angles = []
         for i in xrange(len(data)):
@@ -120,9 +111,7 @@ def time_series(behav, save_directory='plots/time_series/standing_bodytalk', ret
     data = []
     times = []
 
-    # Reset NAO's position.
     behavior.runBehavior(behav)
-    # posture.goToPosture('Standing', 1.0)
 
     # Begin data collection as behavior runs.
     t = time()
