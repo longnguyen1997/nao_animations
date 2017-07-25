@@ -9,7 +9,7 @@ PORT = 9559
 
 motion = ALProxy("ALMotion", ROBOT_IP, PORT)
 behavior = ALProxy("ALBehaviorManager", ROBOT_IP, PORT)
-animations = pickle.load(open('pickles/valid_gestures.pickle', 'rb'))
+animations = pickle.load(open('../pickles/valid_gestures.pickle', 'rb'))
 gesture_vectors = {g : [] for g in animations}
 
 for gesture in animations:
@@ -39,4 +39,4 @@ for gesture in animations:
             continue
     sleep(10) # Wait before going to the next animation.
 
-pickle.dump(gesture_vectors, open('pickles/gesture_feature_vectors.pickle', 'wb'))
+pickle.dump(gesture_vectors, open('../pickles/gesture_feature_vectors.pickle', 'wb'))

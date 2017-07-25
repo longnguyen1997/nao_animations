@@ -1,5 +1,11 @@
+'''
+Various modular functions that depend on each other for
+data processing, the data being NAO's joint sensor
+measurements for motion analysis.
+'''
 from time import sleep, time
 from naoqi import ALProxy
+from motion_analyzer import NAOMotionDataAnalyzer as MA
 import numpy as np
 import matplotlib.pyplot as plt
 import matplotlib.patheffects as path_effects
@@ -27,23 +33,32 @@ motion = proxy("ALMotion")
 behavior = proxy("ALBehaviorManager")
 posture = proxy("ALRobotPosture")
 
+behaviors = behavior.getInstalledBehaviors()[1:] # Ignore behavior_1 (Choregraphe).
+
 # ------ F U N C T I O N S ------- #
 
+def print_behaviors():
+    '''
+    Prints behaviors currently
+    installed in NAO's system.
+    '''
+    for behavior in behaviors:
+        print behavior
+
 def split_reports(reports):
-    # Split each report by new line delimiter.
-    split = [report.split('\n') for report in reports]
+    # Split each report by new line delimiter,
+    # also removing first two header lines.
+    split = [report.split('\n')[2:] for report in reports]
     # Get rid of irrelevant lines in each report.
     for i in xrange(len(split)):
-        for j in xrange(len(split[i])):
+        for j in reversed(xrange(len(split[i]))):
             if 'Tasks' in split[i][j]:
                 break
         split[i] = split[i][:j]
-    # Get rid of header lines in each report.
-    split = [report[2:] for report in split]
     # Split each line of each report into its data.
     split = [[line.split() for line in report] for report in split]
     # Make the data dictionary.
-    angles = {body_part: [] for body_part in motion.getBodyNames('Body')}
+    angles = {body_part: [] for body_part in JOINT_NAMES}
     # Add the angles.
     for report in split:
         for line in report:
@@ -52,32 +67,24 @@ def split_reports(reports):
 
 def process(data):
     reports = set()
+    i = 1
     for b in data:
-        print b
+        print str(i) + ') ' + b
         behavior.post.runBehavior(b)
-        sleep(0.1)
+        sleep(0.1) # Wait 100ms for latency
         while behavior.isBehaviorRunning(b):
             reports.add(motion.getSummary())
     return split_reports(list(reports))
 
-def dump_gesture_data(obj, name):
+def dump_gesture_data(behaviors, name):
     '''
     Dumps gesture data into file name.
 
-    :param obj: Data to dump. MUST be in proper format.
+    :param behaviors: Behaviors to process and dump.
     :param name: Name of file to be saved.
     '''
     from pickle import dump
-    dump(obj, open('pickles/gesture_data/' + name, 'wb'))
-
-def extract_command(line):
-    '''
-    Extracts an angle command from a given line.
-
-    :param line: Line to extract from. Must be derived
-                 from NAO's joint sensor reports.
-    '''
-    return [float(s) for s in line.split()[2:][::4][1:]]
+    dump(process(behaviors), open('pickles/gesture_data/' + name, 'wb'))
 
 def time_series(behav, save_directory='plots/time_series/standing_bodytalk', return_data=False):
     '''
@@ -164,10 +171,3 @@ def time_series(behav, save_directory='plots/time_series/standing_bodytalk', ret
     plt.title(gesture)
     plt.savefig(save_directory + '/' + gesture + '.pdf')
     plt.close()
-
-behaviors = behavior.getInstalledBehaviors()[1:]
-
-# Tuple where 0th element is period, 1st is data.
-data = time_series(behaviors[9], return_data=True)
-for i in range(len(data[1])):
-    motion.angleInterpolation(JOINT_NAMES, data[1][i], data[0], True)

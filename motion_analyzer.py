@@ -1,6 +1,8 @@
 # coding=utf-8
 import matplotlib.pyplot as plt
 import seaborn as sns
+import numpy as np
+import almath
 from naoqi import ALProxy
 from pickle import load
 from random import uniform
@@ -38,6 +40,8 @@ class NAOMotionDataAnalyzer():
                             for k in self.means_stds}
         self.motion_proxy = ALProxy("ALMotion", robot_ip, self.port)
         self.motion_proxy.wakeUp()
+        self.data = None
+        self.last_move = None
 
     def __str__(self):
         return 'CURRENTLY WORKING WITH DATA FILE: ' + self.file + '\nNAO\'S IP ADDRESS: ' + self.ip
@@ -64,22 +68,33 @@ class NAOMotionDataAnalyzer():
     def generate_motion(self):
         '''
         Generates new motion data given the data this module is working with.
-
-        :return: Randomly generated data for each of the 26 NAO sensors
-                 that is statistically within the means of the dataset by its
-                 respective standard deviations.
+        Results in randomly generated data for each of the 26 NAO sensors
+        that is statistically within the means of the dataset by its
+        respective standard deviations.
         '''
+        self.data = {k: uniform(self.data_bounds[k][0], self.data_bounds[k][1]) for k in self.data_bounds}
 
-        return {k: uniform(self.data_bounds[k][0], self.data_bounds[k][1]) for k in self.data_bounds}
+    def get_joints(self, chain):
+        return self.motion_proxy.getBodyNames(chain)
 
-    def move_nao(self, time):
+    def move(self, time):
         '''
         Generates new motion data and interpolates (moves) NAO
         accordingly. All 26 joints are moved at the same time.
 
         :param time: How long the animation should last.
         '''
-        data = self.generate_motion()
-        names = data.keys()
-        angles = data.values()
-        self.motion_proxy.angleInterpolation(names, angles, time, True)
+        self.generate_motion()
+        joints_of_interest = self.get_joints('LArm') + self.get_joints('RArm') + self.get_joints('Head')
+        if self.last_move is not None:
+            angles = [self.data[joint] for joint in joints_of_interest]
+            error = sum(np.absolute(np.array(angles) - np.array(self.last_move)))
+            while error > 0.3 * len(joints_of_interest):
+                self.generate_motion()
+                angles = [self.data[joint] for joint in joints_of_interest]
+            self.last_move = angles
+            print 'Error:', error
+        else:
+            angles = [self.data[joint] for joint in joints_of_interest]
+            self.last_move = angles
+        self.motion_proxy.angleInterpolation(joints_of_interest, angles, time, True)

@@ -1,10 +1,10 @@
 # Fdb version 3
-["pdflatex"] 1500625132 "C:\Users\etri1\Dropbox (MIT)\Programming and ETRI Work\nao_animations\reports\7th_week\7th_week.tex" "C:\Users\etri1\Dropbox (MIT)\Programming and ETRI Work\nao_animations\reports\7th_week\7th_week.pdf" "C:\Users\etri1\Dropbox (MIT)\Programming and ETRI Work\nao_animations\reports\7th_week\7th_week" 1500625135
+["pdflatex"] 1500625132 "C:\Users\etri1\Dropbox (MIT)\Programming and ETRI Work\nao_animations\reports\7th_week\7th_week.tex" "C:\Users\etri1\Dropbox (MIT)\Programming and ETRI Work\nao_animations\reports\7th_week\7th_week.pdf" "C:\Users\etri1\Dropbox (MIT)\Programming and ETRI Work\nao_animations\reports\7th_week\7th_week" 1500625388
   "7th_week.aux" 1500625134 662 b2b94621371df8d9296b8bf5bec1b851 ""
   "7th_week.out" 1500625134 0 d41d8cd98f00b204e9800998ecf8427e ""
   "C:\Users\etri1\Dropbox (MIT)\Programming and ETRI Work\nao_animations\reports\7th_week\7th_week.aux" 1500625134 662 b2b94621371df8d9296b8bf5bec1b851 ""
-  "C:\Users\etri1\Dropbox (MIT)\Programming and ETRI Work\nao_animations\reports\7th_week\7th_week.tex" 1500625131 2097 c3be86267a38978dabb79eb1135fd559 ""
-  "c:/Users/etri1/Dropbox (MIT)/Programming and ETRI Work/nao_animations/reports/7th_week/7th_week.tex" 1500625131 2097 c3be86267a38978dabb79eb1135fd559 ""
+  "C:\Users\etri1\Dropbox (MIT)\Programming and ETRI Work\nao_animations\reports\7th_week\7th_week.tex" 1500625383 2097 c3be86267a38978dabb79eb1135fd559 ""
+  "c:/Users/etri1/Dropbox (MIT)/Programming and ETRI Work/nao_animations/reports/7th_week/7th_week.tex" 1500625383 2097 c3be86267a38978dabb79eb1135fd559 ""
   "c:/texlive/2017/texmf-dist/fonts/map/fontname/texfonts.map" 1499926411 3287 e6b82fe08f5336d4d5ebc73fb1152e87 ""
   "c:/texlive/2017/texmf-dist/fonts/tfm/public/cm/cmbx12.tfm" 1499925096 1324 c910af8c371558dc20f2d7822f66fe64 ""
   "c:/texlive/2017/texmf-dist/fonts/tfm/public/cm/cmmi12.tfm" 1499925096 1524 4414a8315f39513458b80dfc63bff03a ""
@@ -94,9 +94,9 @@
   "c:/texlive/2017/texmf-var/web2c/pdftex/pdflatex.fmt" 1499929421 4125879 51ee51f32762259e6321d9f022f2d0f9 ""
   "c:/texlive/2017/texmf.cnf" 1499929223 673 88525a9fadd7b2e5355c77877d06057d ""
   (generated)
-  "7th_week.out"
   "7th_week.log"
-  "7th_week.aux"
   "C:\Users\etri1\Dropbox (MIT)\Programming and ETRI Work\nao_animations\reports\7th_week\7th_week.pdf"
-  "C:\Users\etri1\Dropbox (MIT)\Programming and ETRI Work\nao_animations\reports\7th_week\7th_week.log"
   "7th_week.pdf"
+  "7th_week.aux"
+  "C:\Users\etri1\Dropbox (MIT)\Programming and ETRI Work\nao_animations\reports\7th_week\7th_week.log"
+  "7th_week.out"
