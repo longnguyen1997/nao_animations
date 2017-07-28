@@ -1,0 +1,35 @@
+\documentclass{article}
+\usepackage{kotex, geometry, hyperref, graphicx}
+
+\title{Week 8 - HMI Research Group \\ \large 24 Jul 2017 - 28 Jul 2017}
+\author{Long Phi Nguyen (뉀피롱), 한국전자통신연구원}
+
+\begin{document}
+
+  \pagenumbering{gobble}
+  \maketitle
+
+
+  \subsection*{Summary} Started the next phase of the project: integrating gesture generation with speech.
+
+  \subsection*{Points}
+  \begin{itemize}
+    \item Read the papers suggested regarding smarter techniques to interpolate motion.
+    \item Wrote \verb|gesture_suite.py|, a class that will directly interface between speech and motion.
+    \item Generated several \verb|NAOMotionDataAnalyzer| instances for different types of motions, such as \emph{yes}, \emph{no}, \emph{you}, etc., to be combined together as gesture suites.
+    \item In regards to the previous point, used gestures with similar body joint trajectories to generate more accurate data.
+    \item Isolated key joints away from the rest of the body: generated data will focus only on the head and arms, while NAO's autonomous life function will take care of natural torso/leg movement.
+  \end{itemize}
+
+  \subsection*{Plans}
+  \begin{itemize}
+    \item Start working again in \verb|spaCy|, this time changing the classification problem into the different types of gestures being worked on now (more specific subsets).
+    \item Accurately train another \verb|spaCy| model.
+    \item Get access to the real NAO robot to test for any efficiencies that might result from translating simulated experiments to physical experiments, such as overheating, memory overhead, etc.
+    \item Begin to merge speech predictions with accurate time intervals of gesture generation.
+  \end{itemize}
+
+  \subsection*{Addendum}
+  The repository can be found \href{https://github.com/longnguyen1997/nao_animations}{\texttt{here}}.
+
+\end{document}

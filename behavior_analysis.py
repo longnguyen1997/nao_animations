@@ -29,11 +29,10 @@ def proxy(module, ip='127.0.0.1', port=9559):
     return ALProxy(module, ip, port)
 
 # Start the proxies.
-motion = proxy("ALMotion")
-behavior = proxy("ALBehaviorManager")
-posture = proxy("ALRobotPosture")
+motion_proxy = proxy("ALMotion")
+behavior_proxy = proxy("ALBehaviorManager")
 
-behaviors = behavior.getInstalledBehaviors()[1:] # Ignore behavior_1 (Choregraphe).
+behaviors = behavior_proxy.getInstalledBehaviors()[1:] # Ignore behavior_1 (Choregraphe).
 
 # ------ F U N C T I O N S ------- #
 
@@ -42,8 +41,10 @@ def print_behaviors():
     Prints behaviors currently
     installed in NAO's system.
     '''
+    i = 0
     for behavior in behaviors:
-        print behavior
+        print i, behavior
+        i += 1
 
 def split_reports(reports):
     # Split each report by new line delimiter,
@@ -70,10 +71,10 @@ def process(data):
     i = 1
     for b in data:
         print str(i) + ') ' + b
-        behavior.post.runBehavior(b)
+        behavior_proxy.post.runBehavior(b)
         sleep(0.1) # Wait 100ms for latency
-        while behavior.isBehaviorRunning(b):
-            reports.add(motion.getSummary())
+        while behavior_proxy.isBehaviorRunning(b):
+            reports.add(motion_proxy.getSummary())
     return split_reports(list(reports))
 
 def dump_gesture_data(behaviors, name):
@@ -118,14 +119,14 @@ def time_series(behav, save_directory='plots/time_series/standing_bodytalk', ret
     data = []
     times = []
 
-    behavior.runBehavior(behav)
+    behavior_proxy.runBehavior(behav)
 
     # Begin data collection as behavior runs.
     t = time()
-    behavior.post.runBehavior(behav)
+    behavior_proxy.post.runBehavior(behav)
     sleep(0.125) # Account for latency.
-    while behavior.isBehaviorRunning(behav):
-        data.append(motion.getSummary())
+    while behavior_proxy.isBehaviorRunning(behav):
+        data.append(motion_proxy.getSummary())
         times.append(time() - t)
 
     # O(n) algorithm to filter by threshold-time intervals.
