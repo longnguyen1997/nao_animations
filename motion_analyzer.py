@@ -6,6 +6,7 @@ from naoqi import ALProxy
 from random import uniform
 from pylab import rcParams
 
+
 class NAOMotionDataAnalyzer():
     """
     Motion analysis and functional movement module. Takes given data in
@@ -26,15 +27,18 @@ class NAOMotionDataAnalyzer():
         :param filename: The name of the data file. Path relative to current directory.
         :param robot_ip: NAO's IP, in string format. Defaulted to 127.0.0.1 (Webots simulation).
         """
+        # Initial constraints.
         self.file = filename
         self.ip = robot_ip
         self.port = 9559
+        # Load and process data.
         self.data = load(open(filename, 'rb'))
         self.means_stds = {k: (mean(self.data[k]), std(self.data[k]))
                            for k in self.data}
-        self.data_bounds = {k : (self.means_stds[k][0] - self.means_stds[k][1],
-                                 self.means_stds[k][0] + self.means_stds[k][1])
+        self.data_bounds = {k: (self.means_stds[k][0] - self.means_stds[k][1],
+                                self.means_stds[k][0] + self.means_stds[k][1])
                             for k in self.means_stds}
+        # Initialize listening proxies.
         self.motion_proxy = ALProxy("ALMotion", self.ip, self.port)
         self.motion_proxy.wakeUp()
         self.data = None
@@ -45,7 +49,7 @@ class NAOMotionDataAnalyzer():
 
     def change_ip(self, ip):
         """
-        :param ip: New IP; must be a string.
+        :param ip: New IP where NAO is being hosted; must be a string.
         """
         self.ip = ip
         self.reestablish_connection()
@@ -67,10 +71,11 @@ class NAOMotionDataAnalyzer():
         import seaborn as sns
         import matplotlib.pyplot as plt
 
-        rcParams['figure.figsize'] = 5.5, 3.8 # Best for viewing.
+        rcParams['figure.figsize'] = 5.5, 3.8  # Best for viewing.
         for k in self.data.keys():
             sns.distplot(self.data[k], hist=False, rug=rug)
-            plt.title(k + ' Sensor Distribution', fontdict={'fontsize': 14}, style='italic')
+            plt.title(k + ' Sensor Distribution',
+                      fontdict={'fontsize': 14}, style='italic')
             plt.xlabel("Angle (rad)")
             plt.ylabel("Frequency")
             plt.savefig(save_directory + '/' + k + '.pdf', bbox_inches='tight')
@@ -83,7 +88,8 @@ class NAOMotionDataAnalyzer():
         that is statistically within the means of the dataset by its
         respective standard deviations.
         """
-        self.data = {k: uniform(self.data_bounds[k][0], self.data_bounds[k][1]) for k in self.data_bounds}
+        self.data = {k: uniform(
+            self.data_bounds[k][0], self.data_bounds[k][1]) for k in self.data_bounds}
 
     def get_joints(self, chain):
         return self.motion_proxy.getBodyNames(chain)
@@ -96,10 +102,12 @@ class NAOMotionDataAnalyzer():
         :param time: How long the animation should last.
         """
         self.generate_motion()
-        joints_of_interest = self.get_joints('LArm') + self.get_joints('RArm') + self.get_joints('Head')
+        joints_of_interest = self.get_joints(
+            'LArm') + self.get_joints('RArm') + self.get_joints('Head')
         if self.last_move is not None:
             angles = [self.data[joint] for joint in joints_of_interest]
-            error = sum(np.absolute(np.array(angles) - np.array(self.last_move)))
+            error = sum(np.absolute(
+                np.array(angles) - np.array(self.last_move)))
             epsilon = 0.3 * len(joints_of_interest)
             while error > epsilon:
                 self.generate_motion()
@@ -109,4 +117,5 @@ class NAOMotionDataAnalyzer():
         else:
             angles = [self.data[joint] for joint in joints_of_interest]
             self.last_move = angles
-        self.motion_proxy.angleInterpolation(joints_of_interest, angles, time, True)
+        self.motion_proxy.angleInterpolation(
+            joints_of_interest, angles, time, True)

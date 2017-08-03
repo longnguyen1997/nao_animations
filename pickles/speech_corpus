@@ -1,0 +1,36 @@
+(dp0
+S'yes'
+p1
+(lp2
+S'You are probably right, yeah.'
+p3
+aS"That's correctly accurate."
+p4
+aS'Yes.'
+p5
+aS'I think you are correct.'
+p6
+aS"Yeah, you're right."
+p7
+aS"Yes, that's right."
+p8
+aS'Yeah, I completely agree.'
+p9
+asS'no'
+p10
+(lp11
+S"That's not right."
+p12
+aS'No.'
+p13
+aS"I think that's a bad way to go."
+p14
+aS"I really don't know."
+p15
+aS"No, I don't agree with you."
+p16
+aS"No, that's not the right way to go."
+p17
+aS"I don't think so."
+p18
+as.

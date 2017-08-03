@@ -11,11 +11,12 @@ import matplotlib.pyplot as plt
 import matplotlib.patheffects as path_effects
 
 JOINT_NAMES = ['HeadYaw', 'HeadPitch', 'LShoulderPitch', 'LShoulderRoll', 'LElbowYaw', 'LElbowRoll',
-            'LWristYaw', 'LHipYawPitch', 'LHipRoll', 'LHipPitch', 'LKneePitch', 'LAnklePitch', 'LAnkleRoll',
-            'RHipYawPitch', 'RHipRoll', 'RHipPitch', 'RKneePitch', 'RAnklePitch', 'RAnkleRoll',
-            'RShoulderPitch', 'RShoulderRoll', 'RElbowYaw', 'RElbowRoll', 'RWristYaw', 'LHand', 'RHand']
+               'LWristYaw', 'LHipYawPitch', 'LHipRoll', 'LHipPitch', 'LKneePitch', 'LAnklePitch', 'LAnkleRoll',
+               'RHipYawPitch', 'RHipRoll', 'RHipPitch', 'RKneePitch', 'RAnklePitch', 'RAnkleRoll',
+               'RShoulderPitch', 'RShoulderRoll', 'RElbowYaw', 'RElbowRoll', 'RWristYaw', 'LHand', 'RHand']
 
 # ------ D E V E L O P M E N T ------- #
+
 
 def proxy(module, ip='127.0.0.1', port=9559):
     '''
@@ -28,13 +29,16 @@ def proxy(module, ip='127.0.0.1', port=9559):
     '''
     return ALProxy(module, ip, port)
 
+
 # Start the proxies.
 motion_proxy = proxy("ALMotion")
 behavior_proxy = proxy("ALBehaviorManager")
 
-behaviors = behavior_proxy.getInstalledBehaviors()[1:] # Ignore behavior_1 (Choregraphe).
+# Ignore behavior_1 (Choregraphe).
+behaviors = behavior_proxy.getInstalledBehaviors()[1:]
 
 # ------ F U N C T I O N S ------- #
+
 
 def print_behaviors():
     '''
@@ -45,6 +49,7 @@ def print_behaviors():
     for behavior in behaviors:
         print i, behavior
         i += 1
+
 
 def split_reports(reports):
     # Split each report by new line delimiter,
@@ -66,16 +71,18 @@ def split_reports(reports):
             angles[line[0]].append(float(line[2]))
     return angles
 
+
 def process(data):
     reports = set()
     i = 1
     for b in data:
         print str(i) + ') ' + b
         behavior_proxy.post.runBehavior(b)
-        sleep(0.1) # Wait 100ms for latency
+        sleep(0.1)  # Wait 100ms for latency
         while behavior_proxy.isBehaviorRunning(b):
             reports.add(motion_proxy.getSummary())
     return split_reports(list(reports))
+
 
 def dump_gesture_data(behaviors, name):
     '''
@@ -86,6 +93,7 @@ def dump_gesture_data(behaviors, name):
     '''
     from pickle import dump
     dump(process(behaviors), open('pickles/gesture_data/' + name, 'wb'))
+
 
 def time_series(behav, save_directory='plots/time_series/standing_bodytalk', return_data=False):
     '''
@@ -106,11 +114,12 @@ def time_series(behav, save_directory='plots/time_series/standing_bodytalk', ret
         '''
         angles = []
         for i in xrange(len(data)):
-            split = data[i].split('\n')[2:] # Remove first 2 header rows.
-            cutoff = 0 # Find where to split the file.
+            split = data[i].split('\n')[2:]  # Remove first 2 header rows.
+            cutoff = 0  # Find where to split the file.
             for j in range(len(split)):
                 if 'Tasks' in split[j]:
-                    cutoff = j; break
+                    cutoff = j
+                    break
             angles.append([t[2] for t in [l.split() for l in split[:cutoff]]])
         return [[float(n) for n in report] for report in angles]
 
@@ -124,7 +133,7 @@ def time_series(behav, save_directory='plots/time_series/standing_bodytalk', ret
     # Begin data collection as behavior runs.
     t = time()
     behavior_proxy.post.runBehavior(behav)
-    sleep(0.125) # Account for latency.
+    sleep(0.125)  # Account for latency.
     while behavior_proxy.isBehaviorRunning(behav):
         data.append(motion_proxy.getSummary())
         times.append(time() - t)
@@ -152,7 +161,8 @@ def time_series(behav, save_directory='plots/time_series/standing_bodytalk', ret
     if return_data:
         return threshold, angles
 
-    gesture = behav.split('/')[-1]  # Name of gesture without directory prefixes.
+    # Name of gesture without directory prefixes.
+    gesture = behav.split('/')[-1]
 
     # Plot the data, 26 colors, 26 joints.
     num_colors = 26

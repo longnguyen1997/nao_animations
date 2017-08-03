@@ -1,10 +1,11 @@
 import numpy as np
-from sklearn.svm import SVC
-from sklearn.metrics import accuracy_score
 import sklearn.linear_model as linear
 import sklearn.naive_bayes as bayes
 import sklearn.neural_network as neural
 import matplotlib.pyplot as plt
+from sklearn.svm import SVC
+from sklearn.metrics import accuracy_score
+
 
 def k_fold_cv(k, data, classifier=SVC()):
     # type: (int, tuple) -> list
@@ -28,6 +29,7 @@ def k_fold_cv(k, data, classifier=SVC()):
         classifier.fit(training_x, training_y)
         scores.append(accuracy_score(test_y, classifier.predict(test_x)))
     return scores
+
 
 def model_comparison_classification(k, data):
     # type: (int, tuple) -> dict
@@ -56,9 +58,10 @@ def model_comparison_classification(k, data):
 
     return models
 
+
 def plot_model_comparison(data, title, xlab, ylab):
     for k in data:
-        plt.plot(data[k], label = k)
+        plt.plot(data[k], label=k)
     plt.title(title)
     plt.xlabel(xlab)
     plt.ylabel(ylab)

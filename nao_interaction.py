@@ -1,8 +1,11 @@
 # -*- encoding: UTF-8 -*-
+"""
+Future work to be done in merging classes
+together into a cohesive naoqi Python module.
+"""
 
 import sys
 import time
-
 from naoqi import ALProxy, ALBroker, ALModule
 from optparse import OptionParser
 from pickle import load
@@ -43,7 +46,7 @@ def main():
                         pport)     # Parent broker port.
 
     global NAOInteraction
-    NAOInteraction = HumanGreeterModule("NAOInteraction")
+    NAOInteraction = SpeechGestures("NAOInteraction")
 
     try:
         while True:
@@ -53,6 +56,7 @@ def main():
         print "INTERRUPTED: Shutting down speech module now."
         myBroker.shutdown()
         sys.exit(0)
+
 
 if __name__ == "__main__":
     main()
