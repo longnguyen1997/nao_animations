@@ -38,11 +38,16 @@ With the `naoqi` library published by Aldebaran, reports were collected and pars
 
 ### Motion generation
 
-Motion generation is done by sampling a point within the mean of a dataset (in this case, joint sensor data), plus/minus one standard deviation. This is a naive way to ensure accurate generation while allowing some freedom for natural deviations. Transitions between gestures are currently not as smooth as they should be.
+Motion generation is done by sampling a point within the mean of a dataset (in this case, joint sensor data), plus/minus one standard deviation. This is a naive way to ensure accurate generation while allowing some freedom for natural deviations. Transitions between gestures are not as smooth as they can be. Gaussian process latent variable models were investigated, as mentioned in *Gesture generation with low-dimensional embeddings*, but a lack of detail regarding gesture generation from the lower-dimensional manifold proved difficult to work with.
+
+### Speech integration with motion generation
+
+A language processing module was developed using `spaCy`, but due to compatibility issues regarding `naoqi`'s 32-bit functionality versus `spaCy`'s 64-bit, integration was unsuccessful. The two can be run separately, one for the sake of training a stochastic gradient descent classifier to categorize text, the other to take said text and generate appropriate gestures from it.
 
 ## References
 
-Some useful papers resourced for the project include, but are not limited to, the following:
+Useful papers referred to for the project include, but are not limited to, the following:
 
-- [Model of expressive gestures for humanoid robot NAO](http://pages.isir.upmc.fr/~achard/GdR/p2.pdf)
-- [Gesture generation with low-dimensional embeddings](http://ict.usc.edu/pubs/Gesture%20generation%20with%20low-dimensional%20embeddings.pdf).
+  1. [Model of expressive gestures for humanoid robot NAO](http://pages.isir.upmc.fr/~achard/GdR/p2.pdf)
+  2. [Gesture generation with low-dimensional embeddings](http://ict.usc.edu/pubs/Gesture%20generation%20with%20low-dimensional%20embeddings.pdf)
+  3. [From Word Embeddings To Document Distances](http://mkusner.github.io/publications/WMD.pdf).
