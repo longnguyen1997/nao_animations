@@ -1,0 +1,32 @@
+\documentclass{article}
+\usepackage{kotex, geometry, hyperref, graphicx}
+
+\title{Week 10 - HMI Research Group \\ \large 7 Aug 2017 - 11 Aug 2017}
+\author{Long Phi Nguyen (뉀피롱), 한국전자통신연구원}
+
+\begin{document}
+
+  \pagenumbering{gobble}
+  \maketitle
+
+
+  \subsection*{Summary} Complete integration from speech module to gesture generation module is not possible, due to cross-compatibility issues between libraries that cannot be brought together. Virtual simulations of gesture generation work just fine, but the real NAO is limited in its processing power and has physical latency not seen in simulation. Gesture generation will not work as it currently does on the real NAO.
+
+  \subsection*{Points}
+  \begin{itemize}
+    \item Experimented with the real NAO using the gesture generation module---CPU noise increases, large latency results in fragmented motion, and interpolation does not look as it should compared to the 100\% accurate virtual environment.
+    \item Updated \verb|README.md| with more info regarding current progress, as well as a reference to a paper found regarding document semantic similarity (\emph{Word Mover's Distance}).
+    \item Looked at GloVe vectors for possible self-implementation of WMD (above), but limited computational power and algorithm complexity is tricky.
+    \item Looking for packages that make use of WMD for semantic similarity to better classify text fed to NAO; ideally, packages should be 32-bit Python-compatible, such as an \verb|nltk| or \verb|gensim| package.
+  \end{itemize} 
+
+  \subsection*{Plans}
+  \begin{itemize}
+    \item Gesture generation is inherently too difficult at this stage, given the dimensional complexity of NAO's sensor data and weak computational power. Moreover, it appears that Aldebaran manually constructed the \verb|XML|s, from looking at source code for the gesture movements. I will focus the last two weeks to the original goal of text classification, using Aldebaran's gestures to supplement instead of trying to create new motions.
+    \item Research into better pipelines for classification.
+  \end{itemize}
+
+  \subsection*{Addendum}
+  The repository can be found \href{https://github.com/longnguyen1997/nao_animations}{\texttt{here}}.
+
+\end{document}

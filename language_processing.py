@@ -14,27 +14,30 @@ from sklearn.linear_model import SGDClassifier
 
 class LanguageProcessing():
 
-    def __init__(self):
+    def __init__(self, model=None):
         # Machine learning models.
         self.nlp = spacy_model.load()
-        self.model = SGDClassifier()
-        # Preprocessing the corpus.
-        # self.corpus: Map<String, List<String>>
-        self.corpus = load(open('pickles/speech_corpus', 'rb'))
-        self.categories = self.corpus.keys()
-        self.classifications_by_cat = {self.categories[i]: i
-                                       for i in range(len(self.categories))}
-        self.classifications_by_num = {i: self.categories[i]
-                                       for i in range(len(self.categories))}
-        # Training the model.
-        training_x = []
-        training_y = []
-        for k in self.corpus:
-            sentences = self.corpus[k]
-            training_x += [self.return_nlp(s).vector for s in sentences]
-            training_y += [self.classifications_by_cat[k]
-                           for i in range(len(sentences))]
-        self.model.fit(array(training_x), array(training_y))
+        if model:
+            self.model = model
+        else:
+            self.model = SGDClassifier()
+            # Preprocessing the corpus.
+            # self.corpus: Map<String, List<String>>
+            self.corpus = load(open('pickles/speech_corpus', 'rb'))
+            self.categories = self.corpus.keys()
+            self.classifications_by_cat = {self.categories[i]: i
+                                           for i in range(len(self.categories))}
+            self.classifications_by_num = {i: self.categories[i]
+                                           for i in range(len(self.categories))}
+            # Training the model.
+            training_x = []
+            training_y = []
+            for k in self.corpus:
+                sentences = self.corpus[k]
+                training_x += [self.return_nlp(s).vector for s in sentences]
+                training_y += [self.classifications_by_cat[k]
+                               for i in range(len(sentences))]
+            self.model.fit(array(training_x), array(training_y))
 
     def return_nlp(self, text):
         """
@@ -52,15 +55,19 @@ class LanguageProcessing():
         return self.return_nlp(s1).similarity(self.return_nlp(s2))
 
     def train_with_query(self, query):
+        query_vectorized = [self.return_nlp(query).vector]
         pred = self.model.predict(
-            array(self.return_nlp(query).vector))[0]
+            array(query_vectorized))[0]
         # Inform the user of the prediction and
         # ask for confirmation of training. To be removed later.
-        print 'QUERY:', query
-        print 'CLASSIFIED AS:', self.classifications_by_num[pred]
-        decision = raw_input('Is this what you expected? 0 for N, 1 for Y.\n> ')
+        print '\n' * 100
+        print 'QUERY: " ' + query + '"'
+        print 'CLASSIFIED AS: "' + self.classifications_by_num[pred] + '"'
+        decision = raw_input(
+            'Is this what you expected? 0 for N, 1 for Y.\n> ')
+        print '\n' * 2
         if eval(decision) == 1:
             # Update the corpus and train the model.
             self.corpus[self.classifications_by_num[pred]].append(query)
-            self.model.partial_fit(array([self.return_nlp(query).vector]),
-                                   array([self.classifications_by_num[pred]]))
+            self.model.partial_fit(array(query_vectorized), array([pred]))
+        return query, self.classifications_by_num[pred]

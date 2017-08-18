@@ -1,5 +1,6 @@
 from os import listdir
 from pickle import load
+from motion_analyzer import NAOMotionDataAnalyzer as MotionAnalyzer
 
 
 class GestureModule():
@@ -12,7 +13,7 @@ class GestureModule():
     of time.
     """
 
-    def __init__(self, analyzer, time):
+    def __init__(self, analyzer, time=0.6):
         """
         Creates an instance of the gesture module.
 
@@ -56,7 +57,8 @@ class GestureSuite():
         self.modules = {}
         for filename in listdir(directory):
             try:
-                self.modules[filename] = load(open(filename), 'rb')
+                module = GestureModule(MotionAnalyzer(directory + filename))
+                self.modules[filename] = module
             except:
                 print 'Invalid file. Check your directory again.'
                 return

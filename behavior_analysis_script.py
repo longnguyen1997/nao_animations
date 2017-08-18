@@ -31,8 +31,8 @@ def proxy(module, ip='127.0.0.1', port=9559):
 
 
 # Start the proxies.
-motion_proxy = proxy("ALMotion")
-behavior_proxy = proxy("ALBehaviorManager")
+motion_proxy = proxy("ALMotion", ip='192.168.0.13')
+behavior_proxy = proxy("ALBehaviorManager", ip='192.168.0.13')
 
 # Ignore behavior_1 (Choregraphe).
 behaviors = behavior_proxy.getInstalledBehaviors()[1:]

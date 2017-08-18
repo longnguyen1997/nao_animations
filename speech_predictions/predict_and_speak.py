@@ -1,4 +1,6 @@
-import pickle, spacy, read_animations
+import pickle
+import spacy
+import read_animations
 import en_vectors_glove_md as eng
 from read_animations import start, wait
 from random import randint
@@ -6,7 +8,9 @@ from subprocess import call
 
 nlp = eng.load()
 model = pickle.load(open('../pickles/perceptron.pickle', 'rb'))
-all_animations_grouped = pickle.load(open('../pickles/all_animations_grouped.pickle', 'rb'))
+all_animations_grouped = pickle.load(
+    open('../pickles/all_animations_grouped.pickle', 'rb'))
+
 
 def blank():
     '''
@@ -14,6 +18,7 @@ def blank():
     clearing the console.
     '''
     print '\n' * 1000
+
 
 def process_gesture(category):
     '''
@@ -26,8 +31,10 @@ def process_gesture(category):
              category, ensuring "natural", stochastic output.
     '''
     group = read_animations.grouped_tags[category]
-    animations = read_animations.animations_by_tag[group[randint(0, len(group) - 1)]]
+    animations = read_animations.animations_by_tag[
+        group[randint(0, len(group) - 1)]]
     return animations[randint(0, len(animations) - 1)]
+
 
 def process_input(input):
     '''
@@ -41,10 +48,11 @@ def process_input(input):
     '''
     prediction = model.predict(nlp(unicode(input)).vector.reshape(1, -1))
     prediction_string = prediction[0]
-    gesture_old = process_gesture(prediction_string)  # 0th index is gesture tag.
+    # 0th index is gesture tag.
     category = all_animations_grouped[prediction_string]
     gesture = category[randint(0, len(category) - 1)]
     return start(gesture) + ' ' + input + ' ' + wait(gesture)
+
 
 def prompt():
     '''

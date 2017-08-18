@@ -1,0 +1,33 @@
+\documentclass{article}
+\usepackage{kotex, geometry, hyperref, graphicx}
+
+\title{Week 9 - HMI Research Group \\ \large 31 Jul 2017 - 4 Aug 2017}
+\author{Long Phi Nguyen (뉀피롱), 한국전자통신연구원}
+
+\begin{document}
+
+  \pagenumbering{gobble}
+  \maketitle
+
+
+  \subsection*{Summary} Speech module is almost at its final stages. Integration with gesture generation remains.
+
+  \subsection*{Points}
+  \begin{itemize}
+    \item Using \verb|spaCy|, wrote \verb|language_processing.py|, which is part of the entire workflow (composed of \verb|language_processing.py|, \verb|gesture_suite.py|, and the \verb|pickles| folder, where all file data is stored).
+    \item Defined a preliminary corpus with roughly 10 entries defined for \verb|yes| and \verb|no|.
+    \item Trained an online model, \verb|SGDClassifier| from \verb|sklearn|, to classify new inputs and learn on the fly and adjust itself. Test results are good so far.
+  \end{itemize}
+
+  \subsection*{Plans}
+  \begin{itemize}
+    \item Feature more classes in the classification problem. Ideas in mind include \verb|you|, \verb|this|, and more.
+    \item Consult an online word/sentence bank or something similar to train the machine learning model with much more than just 10 examples.
+    \item Completely integrate the speech and gesture modules together to get the final product.
+    \item Transfer experiments over to the real NAO robot.
+  \end{itemize}
+
+  \subsection*{Addendum}
+  The repository can be found \href{https://github.com/longnguyen1997/nao_animations}{\texttt{here}}. The new file, \verb|language_processing.py| is included. Another new file, \verb|corpus_script.py|, was used to construct the corpus and dump it to disk for the speech module to read.
+
+\end{document}

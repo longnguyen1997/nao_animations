@@ -40,6 +40,8 @@ class NAOMotionDataAnalyzer():
                             for k in self.means_stds}
         # Initialize listening proxies.
         self.motion_proxy = ALProxy("ALMotion", self.ip, self.port)
+        self.awareness = ALProxy('ALBasicAwareness', self.ip, self.port)
+        self.awareness.stopAwareness()
         self.motion_proxy.wakeUp()
         self.data = None
         self.last_move = None
@@ -106,14 +108,14 @@ class NAOMotionDataAnalyzer():
             'LArm') + self.get_joints('RArm') + self.get_joints('Head')
         if self.last_move is not None:
             angles = [self.data[joint] for joint in joints_of_interest]
-            error = sum(np.absolute(
-                np.array(angles) - np.array(self.last_move)))
-            epsilon = 0.3 * len(joints_of_interest)
-            while error > epsilon:
-                self.generate_motion()
-                angles = [self.data[joint] for joint in joints_of_interest]
+            # error = sum(np.absolute(
+            #     np.array(angles) - np.array(self.last_move)))
+            # epsilon = 0.3 * len(joints_of_interest)
+            # while error > epsilon:
+            self.generate_motion()
+            angles = [self.data[joint] for joint in joints_of_interest]
             self.last_move = angles
-            print 'Error:', error
+            # print 'Error:', error
         else:
             angles = [self.data[joint] for joint in joints_of_interest]
             self.last_move = angles
